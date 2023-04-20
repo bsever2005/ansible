@@ -2,6 +2,6 @@
   remote_user: root
   become: yes
   - name: Install nginx
-    dnf:
+    yum:
        name: nginx
        state: installed
