@@ -5,4 +5,32 @@
   - name: Install nginx
     yum:
        name: nginx
+       state: installed   
+  - name: Start Nginx
+    service:
+       name: nginx
+       state: started
+  - name: Enable nginx service
+    systemd:
+       name: nginx
+       enabled: yes
+       state: started
+  - name: Install Docker
+    yum:
+       name:
+         - docker
        state: installed
+  - name: Start Docker
+    service:
+       name: docker
+       state: started
+  - name: Enable Docker service
+    systemd:
+       name: docker
+       enabled: yes
+  - name: Create /etc/docker directory
+    file:
+       path: /etc/docker
+       state: directory
+
+
