@@ -1,0 +1,8 @@
+- hosts: web
+  remote_user: root
+  become: yes
+  tasks:
+  - name: yum upgrade
+    yum:
+       name: '*'
+       state: latest
