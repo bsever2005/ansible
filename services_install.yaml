@@ -1,0 +1,34 @@
+- hosts: client
+  remote_user: root
+  become: yes
+  tasks:
+  - name: Install Apache
+    yum:
+       name: httpd
+       state: installed
+  - name: Start Apache
+    service:
+       name: httpd
+       state: started
+  - name : Create The HTML File
+    shell: echo "Ovo je test web stranica" > /var/www/html/index.html
+    args:
+       executable: /bin/bash  
+  - name: Install Docker
+    yum:
+       name: docker
+       state: installed
+  - name: Start Podman
+    service:
+       name: podman
+       state: started
+  - name: Install mysql
+    yum: 
+       name: mysql
+       state: installed
+  - name: Test homepage
+    shell:
+       cmd: curl http://localhost
+
+
+

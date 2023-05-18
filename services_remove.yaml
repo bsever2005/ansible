@@ -1,0 +1,17 @@
+- hosts: client
+  remote_user: root
+  become: yes
+  tasks:
+  - name: Remove Apache
+    yum:
+       name: httpd
+       state: removed
+  - name: Remove Docker
+    yum:
+       name: docker
+       state: removed
+  - name: Remove mysql
+    yum: 
+       name: mysql
+       state: removed
+
