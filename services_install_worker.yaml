@@ -115,39 +115,6 @@
        regexp: '^SELINUX=enforcing$'
        line: 'SELINUX=permissive'
        backup: yes
-  - name: Echo local IP and add to command
-    connection: local
-    gather_facts: no
-    vars:
-       local_ip: "{{ ansible_host }}"
-    tasks:
-    - name: Echo local IP
-      debug:
-        msg: "Local IP: {{ local_ip }}"
-    - name: Run command with local IP
-      command: "kubeadm init --ignore-preflight-errors=NumCPU,Mem --pod-network-cidr=10.10.0.0/16 --apiserver-advertise-address={{ local_ip }}"
-  - name: Run kubectl init
-    command: kubectl init --apiserver-advertise-address="{{ kube_apiserver_advertise_address }}"
-  - name: Create .kube directory
-    file:
-       path: "/root/.kube"
-       state: directory
-  - name: Copy Kubernetes admin.conf file to $HOME/.kube/config
-    copy:
-       src: /etc/kubernetes/admin.conf
-       dest: "/root/.kube/config"
-       remote_src: yes
-       mode: '0644'
-  - name: Export KUBECONFIG environment variable
-    lineinfile:
-       path: "root/.bashrc"
-       line: "export KUBECONFIG=/etc/kubernetes/admin.conf"
-       state: present
-       create: yes
-  - name: Restart kubelet service
-    systemd:
-       name: kubelet
-       state: restarted
 
 
 
